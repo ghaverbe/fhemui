@@ -1,0 +1,26 @@
+[
+	{
+		"id": "O01",
+		"name": "Wohnzimmer"
+	},
+	{
+		"id": "O02",
+		"name": "Esszimmer"
+	},
+	{
+		"id": "O03",
+		"name": "K&uumlche"
+	},
+	{
+		"id": "O04",
+		"name": "Kammer"
+	},
+	{
+		"id": "O05",
+		"name": "G&aumlste"
+	},
+	{
+		"id": "O06",
+		"name": "Das Zimmer"
+	}
+]

@@ -1,0 +1,30 @@
+{
+	"address": {
+		"street": "Rubensstr. 11",
+		"zip": 42329,
+		"city": "Wuppertal"
+	},
+	"floors": [
+		{
+			"id": "home",
+			"name": "Home",
+			"desc": "Virtuelle Etage"
+		},
+		{
+			"id": "garden",
+			"name": "Garten"
+		},
+		{
+			"id": "groundfloor",
+			"name": "Erdgeschoss"
+		},
+		{
+			"id": "firstfloor",
+			"name": "Obergeschoss"
+		},
+		{
+			"id": "secondfloor",
+			"name": "Dachgeschoss"
+		}		
+	]
+}

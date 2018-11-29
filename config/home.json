@@ -1,0 +1,16 @@
+[
+	{
+		"id": "status",
+		"name": "Status"
+	},
+	{
+		"id": "presence",
+		"name": "Anwesenheit",
+		"devices": [
+			{
+				"id": "presence",
+				"name": "Anwesenheit"
+			}
+		]
+	}
+]

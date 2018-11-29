@@ -1,0 +1,24 @@
+
+<div class="mt-2 p-0 col-xs-6 col-md-6 col-lg-4">
+	<div class="card m-0">
+		<button type="button" class="btn btn-primary m-0" data-toggle="collapse" data-target="#${room.id}">${room.name}</button>
+		<div class="card-body collapse px-1" id="${room.id}">
+			<ul class="nav nav-tabs" role="tablist" style="font-size: 1.8rem;">
+				<li class="nav-item"><a class="nav-link border-0 text-primary fas fa-lightbulb fa-1g  active" data-toggle="tab" href="#O01L"></a></li>
+				<li class="nav-item"><a class="nav-link border-0 fas fa-thermometer-half fa-1g" data-toggle="tab" href="#O01H"></a></li>
+				<li class="nav-item"><a class="nav-link border-0 fas fa-tv fa-1g" data-toggle="tab" href="#O01M"></a></li>
+				<li class="nav-item"><a class="nav-link border-0 fas fa-cog fa-1g" data-toggle="tab" href="#O01S"></a></li>
+			</ul>
+
+			<div class="card-body border border-0 m-0">
+				<div class="tab-content">
+					<div class="tab-pane container p-1 active" id="O01L">Licht</div>
+					<div class="tab-pane container p-1 fade" id="O01H">Heizung</div>
+					<div class="tab-pane container p-1 fade" id="O01M">Media</div>
+					<div class="tab-pane container p-1 fade" id="O01W">Fenster</div>
+					<div class="tab-pane container p-1 fade" id="O01S">Settings</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

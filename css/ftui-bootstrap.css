@@ -1,0 +1,17 @@
+
+/* .nav-link { */
+/* 	color: #c0c0c0 !important; */
+/* } */
+
+/* .nav-link.active { */
+/* 	color: #3399FF !important; */
+/* 	border-bottom: 3px solid #3399FF !important; */
+/* } */
+
+
+.device-block {
+	margin: 0;
+	padding: 5px 0px;
+	border-top: 1px solid #c0c0c0;
+	border-bottom: 1px solid #c0c0c0;
+}
