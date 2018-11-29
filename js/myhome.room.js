@@ -14,7 +14,38 @@ const floor = {
     ]
 }
 
-createFloor(floor);
+const home = {
+    floors: [{
+            id: 'OG',
+            name: 'Obergeschoss',
+            rooms: [
+                { id: 'O-01', name: 'Wohnzimmer' },
+                { id: 'O-02', name: 'Esszimmer' },
+                { id: 'O-03', name: 'Küche', show: 'show' },
+                { id: 'O-04', name: 'Kammer' },
+                { id: 'O-05', name: 'Gästezimmer' },
+                { id: 'O-06', name: 'Das Zimmer' }
+            ]
+        },
+        {
+            id: 'DG',
+            name: 'Dachgeschoss',
+            show: 'show',
+            rooms: [
+                { id: 'D-01', name: 'Katharina' },
+                { id: 'D-02', name: 'Christina' },
+                { id: 'D-03', name: 'Sophia', show: 'show' },
+                { id: 'D-04', name: 'Wäsche' },
+                { id: 'D-05', name: 'Bad' },
+                { id: 'D-06', name: 'Dusche' }
+            ]
+        }      
+    ]
+}
+
+for (var i = 0; i < home.floors.length; i++) {
+    createFloor(home.floors[i]);
+}
 
 /**
  * @param {String} HTML representing any number of sibling elements
