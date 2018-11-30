@@ -1,45 +1,144 @@
-
-
-const floor = {
-    id: 'OG',
-    name: 'Obergeschoss',
-    show: 'show',
-    rooms: [
-        { id: 'O-01', name: 'Wohnzimmer' },
-        { id: 'O-02', name: 'Esszimmer' },
-        { id: 'O-02', name: 'Küche', show: 'show' },
-        { id: 'O-04', name: 'Kammer' },
-        { id: 'O-05', name: 'Gästezimmer' },
-        { id: 'O-06', name: 'Das Zimmer' }
-    ]
+class Device {
+	constructor(id, name, type) {
+        this.id = id;
+        this.type = type;
+		name ? this.name = name : this.name = id;
+	}
 }
+
+class Config {
+	constructor() {
+		this.floors = [];
+		this.add = function (device, room, floor) {
+            let _floor = "Default";
+			floor ? _floor = floor : _floor = "Default";
+			let exists = false;
+			for (let i = 0; i < this.floors.length; i++) {
+				if (this.floors[i].name === _floor) {
+					exists = true;
+					this.floors[i].add(device, room);
+				}
+			}
+			if (exists === false) {
+				let fl = new Floor(_floor);
+				fl.add(device, room);
+				this.floors.push(fl);
+			}
+		};
+	}
+}
+
+class Floor {
+    constructor(name) {
+        this.name = name;
+        this.rooms = [];
+        this.add = function (device, room) {
+            let _room = "Default";
+            room ? _room = room : _room = "Default";
+            let exists = false;
+            for (let i = 0; i < this.rooms.length; i++) {
+                if (this.rooms[i].name === _room) {
+                    this.rooms[i].add(device);
+                    exists = true;
+                }
+            }
+            if (exists === false) {
+                let fl = new Room(_room);
+                fl.add(device);
+                this.rooms.push(fl);
+            }
+        };
+    }
+}
+
+class Room {
+    constructor(name) {
+        this.name = name;
+        this.devices = [];
+        this.add = function (device) {
+            this.devices.push(device);
+        };
+    }
+}
+
+class Fhem {
+    constructor() {
+        //const server = "192.168.178.24";
+        const server = "localhost";
+        const cmd = "jsonlist2 floor=.* &XHR=1";
+        const url = `http://${server}:8085/fhem?cmd=${cmd}&fwcsrf=1q2w3e4r`;
+        let config = new Config();
+        let get = function (url, callback) {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200)
+                    callback(request.responseText);
+            };
+            request.open("GET", url, true);
+            request.send(null);
+        };
+
+
+        this.getConfig = function () {
+            console.log("-> config");
+            get(url, function (response) {
+                let obj = JSON.parse(response);
+                for (let i = 0; i < obj.Results.length; i++) {
+                    let result = obj.Results[i];
+                    if (result.Attributes.room && result.Attributes.room != "hidden") {
+                        let id = result.Name;
+                        let type = result.Name.split(".")[2];
+                        let name = result.Attributes.name;
+
+                        console.log(`Device : ${name} ${id} ${type}`);
+
+                        let device = new Device(id, name, type);
+                        let room = result.Attributes.room;
+                        let floor = result.Attributes.floor;
+                        config.add(device, room, floor);
+                    }
+                }
+            });
+            console.log("<- config");
+            return config;
+        };
+    }
+}
+
+
+console.log("-----------------------------");
+const fhem = new Fhem();
+let config = fhem.getConfig();
+console.log(config);
+console.log("-----------------------------");
+
 
 const home = {
     floors: [{
-            id: 'OG',
-            name: 'Obergeschoss',
-            rooms: [
-                { id: 'O-01', name: 'Wohnzimmer' },
-                { id: 'O-02', name: 'Esszimmer' },
-                { id: 'O-03', name: 'Küche' },
-                { id: 'O-04', name: 'Kammer' },
-                { id: 'O-05', name: 'Gästezimmer' },
-                { id: 'O-06', name: 'Das Zimmer' }
-            ]
-        },
-        {
-            id: 'DG',
-            name: 'Dachgeschoss',
-            show: 'show',
-            rooms: [
-                { id: 'D-01', name: 'Katharina' },
-                { id: 'D-02', name: 'Christina' },
-                { id: 'D-03', name: 'Sophia' },
-                { id: 'D-04', name: 'Wäsche' },
-                { id: 'D-05', name: 'Bad' },
-                { id: 'D-06', name: 'Dusche' }
-            ]
-        }      
+        id: 'OG',
+        name: 'Obergeschoss',
+        rooms: [
+            { id: 'O-01', name: 'Wohnzimmer' },
+            { id: 'O-02', name: 'Esszimmer' },
+            { id: 'O-03', name: 'Küche' },
+            { id: 'O-04', name: 'Kammer' },
+            { id: 'O-05', name: 'Gästezimmer' },
+            { id: 'O-06', name: 'Das Zimmer' }
+        ]
+    },
+    {
+        id: 'DG',
+        name: 'Dachgeschoss',
+        show: 'show',
+        rooms: [
+            { id: 'D-01', name: 'Katharina' },
+            { id: 'D-02', name: 'Christina' },
+            { id: 'D-03', name: 'Sophia' },
+            { id: 'D-04', name: 'Wäsche' },
+            { id: 'D-05', name: 'Bad' },
+            { id: 'D-06', name: 'Dusche' }
+        ]
+    }
     ]
 }
 
@@ -47,19 +146,9 @@ for (var i = 0; i < home.floors.length; i++) {
     createFloor(home.floors[i]);
 }
 
-/**
- * @param {String} HTML representing any number of sibling elements
- * @return {NodeList} 
- */
-function htmlToElements(html) {
-    var template = document.createElement('template');
-    template.innerHTML = html;
-    return template.content.childNodes;
-}
-
 function createFloor(floor) {
     let template = `<div id="${floor.id}" class="collapse row m-0 ${floor.show}">
-                        <div class="col-lg-3 col-md-8 p-0 mx-0 my-1">
+                        <div class="col-lg-3 col-md-8 p-0 mx-0 my-2">
                             <div class="card p-0 m-0">
                                 <a href="#H01" class="collapsed card-link text-secondary" data-toggle="collapse">
                                     <div class="card-header bg-primary text-white py-2">
@@ -88,14 +177,9 @@ function createFloor(floor) {
     document.body.appendChild(node)
 }
 
-/**
- * Creats a bootstrap card for the room.
- * ,
- * @param {*} room 
- */
 function createRoom(room) {
     let template = `
-        <div class="card p-0 mx-0 my-1">
+        <div class="card p-0 mx-0 my-2">
             <a href="#HREF-${room.id}" class="collapsed card-link text-secondary text-left" data-toggle="collapse">
                 <div class="card-header bg-warning py-2">
                     <h5 class="m-0">${room.name}</h5>
@@ -136,3 +220,13 @@ function createRoom(room) {
 
     return node;
 };
+
+/**
+ * @param {String} HTML representing any number of sibling elements
+ * @return {NodeList} 
+ */
+function htmlToElements(html) {
+    var template = document.createElement('template');
+    template.innerHTML = html;
+    return template.content.childNodes;
+}

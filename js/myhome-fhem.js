@@ -67,6 +67,8 @@ function Fhem() {
 	const server = "localhost";
 	const cmd = "jsonlist2 floor=.* &XHR=1";
 	const url = `http://${server}:8085/fhem?cmd=${cmd}&fwcsrf=1q2w3e4r`;
+
+	console.log(`URL : ${url}`);
 	
 	let config = new Config();
 	
