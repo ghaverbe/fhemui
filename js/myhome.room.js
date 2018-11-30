@@ -21,7 +21,7 @@ const home = {
             rooms: [
                 { id: 'O-01', name: 'Wohnzimmer' },
                 { id: 'O-02', name: 'Esszimmer' },
-                { id: 'O-03', name: 'Küche', show: 'show' },
+                { id: 'O-03', name: 'Küche' },
                 { id: 'O-04', name: 'Kammer' },
                 { id: 'O-05', name: 'Gästezimmer' },
                 { id: 'O-06', name: 'Das Zimmer' }
@@ -34,7 +34,7 @@ const home = {
             rooms: [
                 { id: 'D-01', name: 'Katharina' },
                 { id: 'D-02', name: 'Christina' },
-                { id: 'D-03', name: 'Sophia', show: 'show' },
+                { id: 'D-03', name: 'Sophia' },
                 { id: 'D-04', name: 'Wäsche' },
                 { id: 'D-05', name: 'Bad' },
                 { id: 'D-06', name: 'Dusche' }
@@ -59,21 +59,23 @@ function htmlToElements(html) {
 
 function createFloor(floor) {
     let template = `<div id="${floor.id}" class="collapse row m-0 ${floor.show}">
-                        <div class="card m-2">
-                            <a href="#H01" class="collapsed card-link text-secondary" data-toggle="collapse">
-                                <div class="card-header bg-primary text-white py-2">
-                                    <h5 class="m-0">${floor.name}</h5>
-                                    <div class=" display-topright">
-                                        <div class="tiny inline left-narrow-2x" data-type="symbol" data-device="O.01.Licht" data-states='["on","off"]' data-hide-on="off" data-hide-off="on" data-icons='["oa-light_light_dim_100"]' data-on-color="white"></div>
-                                        <div class="tiny inline left-narrow-2x" data-type="symbol" data-device="O.01.Heizung" data-states='["on","off"]' data-hide-on="off" data-hide-off="on" data-icons='["fa-thermometer-half"]' data-on-color="white"></div>
-                                        <div class="tiny inline left-narrow-2x" data-type="symbol" data-device="O.01.Fenster" data-states='["on","off"]' data-hide-on="off" data-hide-off="on" data-icons='["oa-fts_window_1w"]' data-on-color="white"></div>
+                        <div class="col-lg-3 col-md-8 p-0 mx-0 my-1">
+                            <div class="card p-0 m-0">
+                                <a href="#H01" class="collapsed card-link text-secondary" data-toggle="collapse">
+                                    <div class="card-header bg-primary text-white py-2">
+                                        <h5 class="m-0">${floor.name}</h5>
+                                        <div class=" display-topright">
+                                            <div class="tiny inline left-narrow-2x" data-type="symbol" data-device="O.01.Licht" data-states='["on","off"]' data-hide-on="off" data-hide-off="on" data-icons='["oa-light_light_dim_100"]' data-on-color="white"></div>
+                                            <div class="tiny inline left-narrow-2x" data-type="symbol" data-device="O.01.Heizung" data-states='["on","off"]' data-hide-on="off" data-hide-off="on" data-icons='["fa-thermometer-half"]' data-on-color="white"></div>
+                                            <div class="tiny inline left-narrow-2x" data-type="symbol" data-device="O.01.Fenster" data-states='["on","off"]' data-hide-on="off" data-hide-off="on" data-icons='["oa-fts_window_1w"]' data-on-color="white"></div>
+                                        </div>
                                     </div>
+                                </a>
+                                <div id="H01" class="card-body collapse">
+                                    <p class="card-text">Status Licht</p>
+                                    <p class="card-text">Status Fenster</p>
+                                    <p class="card-text">Status Heizung</p>
                                 </div>
-                            </a>
-                            <div id="H01" class="card-body collapse">
-                                <p class="card-text">Status Licht</p>
-                                <p class="card-text">Status Fenster</p>
-                                <p class="card-text">Status Heizung</p>
                             </div>
                         </div>                        
                     </div>`;
@@ -93,7 +95,7 @@ function createFloor(floor) {
  */
 function createRoom(room) {
     let template = `
-        <div class="card">
+        <div class="card p-0 mx-0 my-1">
             <a href="#HREF-${room.id}" class="collapsed card-link text-secondary text-left" data-toggle="collapse">
                 <div class="card-header bg-warning py-2">
                     <h5 class="m-0">${room.name}</h5>
@@ -127,7 +129,7 @@ function createRoom(room) {
         </div>`;
 
     var node = document.createElement("div");
-    node.classList.add("col-12", "col-sm-6", "col-md-4", "col-lg-3", "p-0", "m-1");
+    node.classList.add("col-lg-3", "col-md-4", "p-0", "m-0");
     node.id = room.id;
     node.innerHTML = template;
     //    document.getElementById("O-ROOMS").appendChild(node)
