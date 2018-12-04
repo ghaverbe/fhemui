@@ -1,3 +1,10 @@
+const pref = {
+    corlor: {
+        background: "#337DFF",
+        forground: "#FFB533",
+        text: "#FFFFFF"
+    }
+}
 const home = {
     name: 'MY.HOME (TEST)',
     floors: [{
@@ -48,7 +55,7 @@ const home = {
             }, {
                 type: 'status',
                 divices: [
-                    { id: 'O.01.Light.00', type: 'j', name: 'Volumio', desc: 'Audio' }
+                    { id: 'O.01.Light.00', type: 'status', name: 'Volumio', desc: 'Audio' }
                 ]
             }]
         }, {

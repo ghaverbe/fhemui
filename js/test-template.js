@@ -15,8 +15,6 @@ addFloor = function (node, floor) {
     return element;
 }
 
-
-
 addRoom = function (node, room) {
     let template = `<div id="${room.id}" class="card p-0">
                         <a href="#card-body-${room.id}" class="collapsed card-link text-secondary text-left" data-toggle="collapse">
@@ -40,9 +38,12 @@ addRoom = function (node, room) {
 
 genGroup = function (room, group) {
     console.log(`      [${room.id}] - ${group.type}  `);
+    let icon = getIcon(group.type);
 
     let tabNavNode = document.getElementById(`nav-tab-${room.id}`)
-    let tabNavTemp = `<a class="nav-item nav-link" data-toggle="tab" href="#gtp-${room.id}-${group.type}" role="tab"><i class="fa fa-cog big"></i></a>`;
+    let tabNavTemp = `<a class="nav-item nav-link" data-toggle="tab" href="#gtp-${room.id}-${group.type}" role="tab">
+                        <i class="fa ${getIcon(group.type)} big"></i>
+                      </a>`;
     tabNavNode.appendChild(toElement(tabNavTemp));
 
     let tabPanelNode = document.getElementById(`gtc-${room.id}`);
@@ -50,7 +51,7 @@ genGroup = function (room, group) {
     let node = toElement(tabPanelTemp);
 
     tabPanelNode.appendChild(node);
-    
+
 
     if (group.divices) {
         for (const device of group.divices) {
@@ -65,16 +66,35 @@ genDevice = function (node, device) {
     let template = "<p>*</p>";
     switch (device.type) {
         case "switch":
-            template = `<div class="small" data-type="switch" data-device="${device.id}"></div>`;
+            template = `<div class="small" 
+                             data-type="switch" 
+                             data-device="${device.id}"
+                             data-background-color="${pref.corlor.background}">
+                        </div>`;
             break;
         case "push":
-            template = `<div class="small" data-type="push" data-device="${device.id}" data-cmd="set" data-set-on="on"></div>`
+            template = `<div class="small" 
+                             data-type="push" 
+                             data-device="${device.id}" 
+                             data-cmd="set" 
+                             data-set-on="on"
+                             data-background-icon="fa-circle" 
+                             data-icon="fa-lightbulb-o"
+                             data-background-color="${pref.corlor.background}"
+                             data-on-color="${pref.corlor.forground}"
+                             data-on-background-color="${pref.corlor.forground}"
+                             data-off-color="${pref.corlor.text}"
+                             data-off-background-color="${pref.corlor.background}">
+                        </div>`
             break;
         case "climate":
             template = "<p>climate</p>";
             break;
         case "audio":
             template = "<p>audio</p>";
+            break;
+        case "status":
+            template = "<p>status</p>";
             break;
         default:
             text = "<p>?</p>";
@@ -98,18 +118,27 @@ for (const floor of home.floors) {
         if (room.groups) {
             for (const group of room.groups) {
                 genGroup(room, group);
-                /*
-                                if (group.divices) {
-                                    for (const device of group.divices) {
-                                        //addDevice(nodeGroup, device);
-                                    }
-                                }
-                */
             }
         }
     }
 }
 
+function getIcon(type) {
+    switch (type) {
+        case 'mode':
+            return "fa-cog";
+        case 'light':
+            return "fa-lightbulb-o";
+        case 'heating':
+            return "fa-thermometer-quarter";
+        case 'audio':
+            return "fa-volume-down";
+        case 'status':
+            return "fa-signal";
+        default:
+            return "";
+    }
+}
 
 function toElement(html) {
     var template = document.createElement('template');
