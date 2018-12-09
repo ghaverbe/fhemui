@@ -1,0 +1,30 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 20px auto 60px;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.grid-container h5 {
+    color: #336699;
+}
+
+.grid-container p {
+    color: #AAAAAA;
+    font-size: 12px;
+}
+
+.room-bg {
+    background-color: #EEEEEE;
+}
+
+.nav-item.active {
+    border-bottom: 3px solid #336699;
+}
+
+.nav-item i {
+    color: #CCCCCC;
+}
+
+.nav-item.active i {
+    color: #336699;
+}

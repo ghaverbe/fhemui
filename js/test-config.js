@@ -1,7 +1,7 @@
 const pref = {
     corlor: {
-        background: "#337DFF",
-        forground: "#FFB533",
+        background: "#336699",
+        forground: "#336699",
         text: "#FFFFFF"
     }
 }
@@ -18,34 +18,29 @@ const home = {
             groups: [{
                 type: 'mode',
                 divices: [
-                    { id: 'O.01.Light.00', type: 'switch', name: 'Zentral', desc: 'Zentraler Lichtschalter' },
-                    { id: 'O.01.Mode.01', type: 'push', name: 'Hauskreis', desc: '???' },
-                    { id: 'O.01.Mode.02', type: 'push', name: 'Kino', desc: '???' },
-                    { id: 'O.01.Mode.03', type: 'push', name: 'Aus', desc: 'Alles aus' },
+                    { id: 'O.00.Scene', type: 'push', name: 'Morgen', desc: '???', cmd: "set O.00.Scene scene morgen"},
+                    { id: 'O.00.Scene', type: 'push', name: 'Abend', desc: '???', cmd: "set O.00.Scene scene abend"},
+                    { id: 'O.00.Scene', type: 'push', name: 'Hauskreis', desc: '???', cmd: "set O.00.Scene scene hauskreis"},
+                    { id: 'O.00.Scene', type: 'push', name: 'Kino', desc: '???', cmd: "set O.00.Scene scene kino"},
+                    { id: 'O.00.Scene', type: 'push', name: 'Ein', desc: 'Schaltet alle Lampen ein', cmd: "set O.00.Scene scene an"},
+                    { id: 'O.00.Scene', type: 'push', name: 'Aus', desc: 'Schaltet alle Lampen aus', cmd: "set O.00.Scene scene aus" }
                 ]
             }]
         }, {
-            id: 'O-01',
             name: 'Wohnzimmer',
+            id: 'O-01',
             onload: 'show',
             groups: [{
-                type: 'mode',
-                divices: [
-                    { id: 'O.01.Light.00', type: 'switch', name: 'Zentral', desc: 'Zentraler Lichtschalter' },
-                    { id: 'O.01.Mode.01', type: 'push', name: 'Hauskreis', desc: '???' },
-                    { id: 'O.01.Mode.02', type: 'push', name: 'Kino', desc: '???' },
-                    { id: 'O.01.Mode.03', type: 'push', name: 'Aus', desc: 'Alles aus' },
-                ]
-            },{
                 type: 'light',
                 divices: [
+                    { id: 'O.01.Light.00', type: 'switch', name: 'Zentral', desc: 'Zentraler Lichtschalter' },
                     { id: 'O.01.Light.01', type: 'switch', name: 'Stehlempe 1', desc: 'Stehlempe am Sofa' },
                     { id: 'O.01.Light.02', type: 'switch', name: 'Stehlempe 2', desc: 'Stehlempe am Fenster' }
                 ]
             }, {
                 type: 'heating',
                 divices: [
-                    { id: 'O.01.Climate.01', type: 'climate', name: 'Heizung', desc: 'Heizkörper am Henster' }
+                    { id: 'O.01.Clima.01', type: 'climate', name: 'Heizung', desc: 'Heizkörper am Fenster' }
                 ]
             }, {
                 type: 'audio',
@@ -66,7 +61,17 @@ const home = {
                 { id: 'O.02.Licht.02', type: 'switch', name: 'Tisch', desc: 'Deckenleuchte über dem Tisch' }
             ]
         },
-        { id: 'O-03', name: 'Küche' },
+        { id: 'O-03', 
+        name: 'Küche', 
+        groups: [{
+            type: 'light',
+            divices: [
+                { id: 'O.03.Licht.1', type: 'switch', name: 'Arbeitsfläche', desc: 'Lampen unter dem Regal' },
+                { id: 'O.03.Licht.2', type: 'switch', name: 'Deckenleuchte', desc: 'Deckenleuchten über dem Küchenblock' },
+                { id: 'O.03.Licht', type: 'switch', name: 'Zentral', desc: 'Zentraler Lichtschalter' }
+            ]
+        }]
+    },
         { id: 'O-04', name: 'Kammer' },
         { id: 'O-05', name: 'Gästezimmer' },
         { id: 'O-06', name: 'Das Zimmer' }

@@ -16,14 +16,14 @@ addFloor = function (node, floor) {
 }
 
 addRoom = function (node, room) {
-    let template = `<div id="${room.id}" class="card p-0">
+    let template = `<div id="${room.id}" class="card shadow p-0 mt-2 mx-auto room-bg">
                         <a href="#card-body-${room.id}" class="collapsed card-link text-secondary text-left" data-toggle="collapse">
                             <div class="card-header bg-warning py-2">
                                 <h5 class="m-0">${room.name}</h5>
                             </div>
                         </a>
                         <div id="card-body-${room.id}" class="card-body collapse p-2 ${room.onload}">
-                            <nav>
+                            <nav class="">
                                 <div class="nav border-bottom" id="nav-tab-${room.id}" role="tablist">
                                 </div>
                             </nav>
@@ -42,12 +42,12 @@ genGroup = function (room, group) {
 
     let tabNavNode = document.getElementById(`nav-tab-${room.id}`)
     let tabNavTemp = `<a class="nav-item nav-link" data-toggle="tab" href="#gtp-${room.id}-${group.type}" role="tab">
-                        <i class="fa ${getIcon(group.type)} big"></i>
+                        <i class="fa ${getIcon(group.type)} bigger"></i>
                       </a>`;
     tabNavNode.appendChild(toElement(tabNavTemp));
 
     let tabPanelNode = document.getElementById(`gtc-${room.id}`);
-    let tabPanelTemp = `<div id="gtp-${room.id}-${group.type}" class="tab-pane fade p-2"></div>`;
+    let tabPanelTemp = `<div id="gtp-${room.id}-${group.type}" class="tab-pane fade p-0"></div>`;
     let node = toElement(tabPanelTemp);
 
     tabPanelNode.appendChild(node);
@@ -66,42 +66,82 @@ genDevice = function (node, device) {
     let template = "<p>*</p>";
     switch (device.type) {
         case "switch":
-            template = `<div class="small" 
-                             data-type="switch" 
-                             data-device="${device.id}"
-                             data-background-color="${pref.corlor.background}">
-                        </div>`;
+            genSwitch(node, device);
             break;
         case "push":
-            template = `<div class="small" 
-                             data-type="push" 
-                             data-device="${device.id}" 
-                             data-cmd="set" 
-                             data-set-on="on"
-                             data-background-icon="fa-circle" 
-                             data-icon="fa-lightbulb-o"
-                             data-background-color="${pref.corlor.background}"
-                             data-on-color="${pref.corlor.forground}"
-                             data-on-background-color="${pref.corlor.forground}"
-                             data-off-color="${pref.corlor.text}"
-                             data-off-background-color="${pref.corlor.background}">
-                        </div>`
+            genPush(node, device);
             break;
         case "climate":
-            template = "<p>climate</p>";
+            genClimate(node, device);
             break;
         case "audio":
             template = "<p>audio</p>";
+            node.appendChild(htmlToElements(template)[0]);
             break;
         case "status":
             template = "<p>status</p>";
+            node.appendChild(htmlToElements(template)[0]);
             break;
         default:
             text = "<p>?</p>";
+            node.appendChild(htmlToElements(template)[0]);
     }
-    node.appendChild(htmlToElements(template)[0]);
 }
 
+function genClimate(node, device) {
+    //let template = `<div data-type="label" data-device="${device.id}"></div>`;
+    let template =   `<div  data-type="label" data-device="${device.id}" data-unit="&deg;C" 
+                            data-color="${pref.corlor.forground}"
+                            class="tall">
+                      </div>
+                      <p>Soll Temperatur</p>
+                      `;
+    node.appendChild(toElement(template));    
+}
+
+function genSwitch(node, device) {
+    let template = `<div class="grid-container p-0">
+                        <div class=""></div>
+                        <div class="align-self-center">
+                            <h5 class="text-left m-0">${device.name}</h5>
+                            <p class="text-left m-0">${device.desc}</p>
+                        </div>
+                        <div class="small" 
+                            data-type="switch" 
+                            data-device="${device.id}"
+                            data-color="#FFFFFF"
+                            data-on-color="#336699"
+                            data-on-background-color="#FFCC33"
+                            data-background-color="${pref.corlor.background}">
+                        </div>
+                    </div>`;
+    node.appendChild(toElement(template));
+}
+
+function genPush(node, device) {
+    let template = `<div class="grid-container p-0">
+                        <div class=""></div>
+                        <div class="align-self-center">
+                            <h5 class="text-left m-0">${device.name}</h5>
+                            <p class="text-left m-0">${device.desc}</p>
+                        </div>
+                        <div class="small" 
+                            data-type="push" 
+                            data-device="${device.id}" 
+                            data-cmd="set" 
+                            data-fhem-cmd="${device.cmd}"
+                            data-set-on="on"
+                            data-background-icon="fa-circle" 
+                            data-icon="fa-lightbulb-o"
+                            data-background-color="#FFCC33"
+                            data-on-color="${pref.corlor.forground}"
+                            data-on-background-color="#FFCC33"
+                            data-off-color="${pref.corlor.text}"
+                            data-off-background-color="${pref.corlor.background}"> 
+                        </div>
+                    <div>`
+    node.appendChild(toElement(template));  
+}
 
 let navbar = document.getElementById("navbar");
 document.body
